@@ -1,32 +1,40 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+   
     <router-view/>
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import axios from 'axios';
 
-#nav {
-  padding: 30px;
+export default {
+  name : "App",
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+  data() {
+    return {
+      APIkey : "349ec1dd769429e0244aac8ecd5240d3",
+      city : "Verona",
     }
+  },
+
+  methods: {
+    getCurrentWeather() {
+      axios.get(
+        `api.openweathermap.org/data/2.5/weather?q=${this.city}&units=metric&lang=it&appid=${this.APIkey}`
+      ).then(res => {
+        console.log(res.data);
+      });
+    },
+  },
+};
+</script>
+
+<style lang="scss">
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Quicksand', sans-serif;
   }
-}
 </style>
