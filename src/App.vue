@@ -25,7 +25,7 @@ export default {
   methods: {
     getCurrentWeather() {
       axios.get(
-        `api.openweathermap.org/data/2.5/weather?q=${this.city}&units=metric&lang=it&appid=${this.APIkey}`
+        `https://api.openweathermap.org/data/2.5/weather?q=${this.city}&units=metric&lang=it&appid=${this.APIkey}`
       ).then(res => {
         console.log(res.data);
       });
