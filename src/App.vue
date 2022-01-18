@@ -18,6 +18,10 @@ export default {
     }
   },
 
+  created() {
+    this.getCurrentWeather();
+  },
+
   methods: {
     getCurrentWeather() {
       axios.get(
