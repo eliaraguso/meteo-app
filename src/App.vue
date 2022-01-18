@@ -7,6 +7,7 @@
 
 <script>
 import axios from 'axios';
+import db from "./firebase/firebaseinit";
 
 export default {
   name : "App",
@@ -15,14 +16,24 @@ export default {
     return {
       APIkey : "349ec1dd769429e0244aac8ecd5240d3",
       city : "Verona",
+      cities: [],
     }
   },
 
   created() {
-    this.getCurrentWeather();
+    this.getCityWeather();
   },
 
   methods: {
+    getCityWeather() {
+      let firebaseDB = db.collection('cities');
+
+      firebaseDB.onSnapshot(snap => {
+        snap.docChanges().forEach(async(doc) => {
+          console.log(doc);
+        })
+      })
+    },
     getCurrentWeather() {
       axios.get(
         `https://api.openweathermap.org/data/2.5/weather?q=${this.city}&units=metric&lang=it&appid=${this.APIkey}`
