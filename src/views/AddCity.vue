@@ -1,11 +1,13 @@
 <template>
   <div class="grid">
-   
+    <div class="city-link" v-for="(city, index) in cities" v-bind:key="index">
+      <City />
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
+import City from "../components/City.vue";
 
 
 export default {
@@ -15,7 +17,7 @@ export default {
     console.log(this.cities)
   },
   components: {
-    
+    City,
   }
 }
 </script>
