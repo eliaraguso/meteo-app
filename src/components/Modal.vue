@@ -1,5 +1,5 @@
 <template>
-  <div class="modal" ref="modal">
+  <div @click="closeModal" class="modal" ref="modal">
     <div class="modal-wrap" ref="modalWrap">
       <label for="city-name">Trova città</label>
       <input
@@ -20,6 +20,12 @@ export default {
       return {
           city: null,
       }
+  },
+
+  methods: {
+    closeModal() {
+      this.$emit('close-modal');
+    },
   },
 };
 </script>
