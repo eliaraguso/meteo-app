@@ -1,23 +1,27 @@
 <template>
-  <div id="app">
-   
-    <router-view/>
+  <div class="main">
+    <Navigation class="navigation" />
+    <router-view />
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 import db from "./firebase/firebaseinit";
+import Navigation from "./components/Navigation.vue";
 
 export default {
-  name : "App",
+  name: "App",
+
+  components: {
+    Navigation,
+  },
 
   data() {
     return {
-      APIkey : "349ec1dd769429e0244aac8ecd5240d3",
-      city : "Verona",
+      APIkey: "349ec1dd769429e0244aac8ecd5240d3",
       cities: [],
-    }
+    };
   },
 
   created() {
@@ -26,35 +30,34 @@ export default {
 
   methods: {
     getCityWeather() {
-      let firebaseDB = db.collection('cities');
+      let firebaseDB = db.collection("cities");
 
-      firebaseDB.onSnapshot(snap => {
-        snap.docChanges().forEach(async(doc) => {
-          if (doc.type === 'added') {
-            try{
+      firebaseDB.onSnapshot((snap) => {
+        snap.docChanges().forEach(async (doc) => {
+          if (doc.type === "added") {
+            try {
               const response = await axios.get(
-                `https://api.openweathermap.org/data/2.5/weather?q=${doc.doc.data().city}&units=metric&lang=it&appid=${this.APIkey}`
-                );
-                const data = response.data;
-                firebaseDB.doc(doc.doc.id).update({
+                `https://api.openweathermap.org/data/2.5/weather?q=${
+                  doc.doc.data().city
+                }&units=metric&lang=it&appid=${this.APIkey}`
+              );
+              const data = response.data;
+              firebaseDB
+                .doc(doc.doc.id)
+                .update({
                   currentWeather: data,
-                }).then(() => {
-                  this.cities.push(doc.doc.data());
-                }).then(() => {
-                  console.log(this.cities);
                 })
-            } catch(err) {
+                .then(() => {
+                  this.cities.push(doc.doc.data());
+                })
+                .then(() => {
+                  console.log(this.cities);
+                });
+            } catch (err) {
               console.log(err);
             }
           }
-        })
-      })
-    },
-    getCurrentWeather() {
-      axios.get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${this.city}&units=metric&lang=it&appid=${this.APIkey}`
-      ).then(res => {
-        console.log(res.data);
+        });
       });
     },
   },
@@ -62,10 +65,25 @@ export default {
 </script>
 
 <style lang="scss">
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Quicksand', sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Quicksand", sans-serif;
+}
+
+.main {
+  height: 100vh;
+  .navigation {
+    z-index: 99;
+    position: fixed;
+    max-width: 1024px;
+    width: 100%;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
   }
+
+  .container {
+    padding: 0 20px;
+  }
+}
 </style>
