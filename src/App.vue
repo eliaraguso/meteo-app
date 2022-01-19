@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <Modal />
+    <Modal v-if="modalOpen"/>
     <Navigation />
     <router-view v-bind:cities="cities"/>
   </div>
@@ -24,6 +24,7 @@ export default {
     return {
       APIkey: "349ec1dd769429e0244aac8ecd5240d3",
       cities: [],
+      modalOpen: null,
     };
   },
 
