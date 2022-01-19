@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="grid">
    
   </div>
 </template>
@@ -10,6 +10,10 @@
 
 export default {
   name: 'AddCity',
+  props: ['cities'],
+  created() {
+    console.log(this.cities)
+  },
   components: {
     
   }
