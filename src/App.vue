@@ -1,5 +1,6 @@
 <template>
   <div class="main">
+    <Modal />
     <Navigation />
     <router-view v-bind:cities="cities"/>
   </div>
@@ -9,12 +10,14 @@
 import axios from "axios";
 import db from "./firebase/firebaseinit";
 import Navigation from "./components/Navigation.vue";
+import Modal from "./components/Modal.vue";
 
 export default {
   name: "App",
 
   components: {
     Navigation,
+    Modal,
   },
 
   data() {

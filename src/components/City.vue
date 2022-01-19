@@ -3,7 +3,7 @@
       <span>{{this.city.city}}</span>
       <div class="weather">
           <span>{{Math.round(this.city.currentWeather.main.temp)}}&deg;</span>
-          <img :src="require(`../../public/conditions/${this.city.currentWeather.weather[0].icon}.png`)" alt="">
+          <img :src="require(`../../public/conditions/${this.city.currentWeather.weather[0].icon}.png`)" alt="weather icon">
       </div>
       <div class="video">
           <video autoplay loop muted :src="require(`../../public/videos/${this.city.currentWeather.weather[0].icon}.mp4`)"></video>
@@ -55,7 +55,7 @@ export default {
         }
 
         img {
-            height: 20px;
+            height: 60px;
             width: auto;
         }
     }
