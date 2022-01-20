@@ -23,8 +23,11 @@ export default {
   },
 
   methods: {
-    closeModal() {
-      this.$emit('close-modal');
+    closeModal(e) {
+      if(e.target === this.$refs.modal) {
+        
+        this.$emit('close-modal');
+      }
     },
   },
 };
