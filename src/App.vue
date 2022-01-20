@@ -1,8 +1,12 @@
 <template>
   <div class="main">
-    <Modal v-if="modalOpen" v-on:close-modal="toggleModal" v-bind:APIkey="APIkey"/>
-    <Navigation v-on:add-city="toggleModal"  />
-    <router-view v-bind:cities="cities" />
+    <Modal
+      v-if="modalOpen"
+      v-on:close-modal="toggleModal"
+      v-bind:APIkey="APIkey"
+    />
+    <Navigation v-on:add-city="toggleModal" v-on:edit-city="toggleEdit" />
+    <router-view v-bind:cities="cities" v-bind:edit="edit" />
   </div>
 </template>
 
@@ -25,6 +29,7 @@ export default {
       APIkey: "349ec1dd769429e0244aac8ecd5240d3",
       cities: [],
       modalOpen: null,
+      edit: null,
     };
   },
 
@@ -66,6 +71,9 @@ export default {
     toggleModal() {
       this.modalOpen = !this.modalOpen;
     },
+    toggleEdit() {
+      this.edit = !this.edit;
+    }
   },
 };
 </script>
