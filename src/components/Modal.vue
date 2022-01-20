@@ -8,17 +8,23 @@
         placeholder="Cerca la città per nome"
         v-model="city"
       />
+      <button @click="addCity">Aggiungi città</button>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios'; 
+
+
 export default {
   name: "Modal",
 
+  props: ['APIkey'],
+
   data() {
       return {
-          city: null,
+          city: "",
       }
   },
 
@@ -29,6 +35,17 @@ export default {
         this.$emit('close-modal');
       }
     },
+    async addCity() {
+      if (this.city === "") {
+        alert('Devi inserire una città');
+      } else {
+        const res = await axios.get(
+          `https://api.openweathermap.org/data/2.5/weather?q=${this.city}&units=metric&lang=it&appid=${this.APIkey}`
+        );
+        const data = await res.data;
+        console.log(data);
+      }
+    }
   },
 };
 </script>
