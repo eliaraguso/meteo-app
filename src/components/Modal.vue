@@ -14,38 +14,42 @@
 </template>
 
 <script>
-import axios from 'axios'; 
-
+import axios from "axios";
+import db from "../firebase/firebaseinit";
 
 export default {
   name: "Modal",
 
-  props: ['APIkey'],
+  props: ["APIkey"],
 
   data() {
-      return {
-          city: "",
-      }
+    return {
+      city: "",
+    };
   },
 
   methods: {
     closeModal(e) {
-      if(e.target === this.$refs.modal) {
-        
-        this.$emit('close-modal');
+      if (e.target === this.$refs.modal) {
+        this.$emit("close-modal");
       }
     },
     async addCity() {
       if (this.city === "") {
-        alert('Devi inserire una città');
+        alert("Devi inserire una città");
       } else {
         const res = await axios.get(
           `https://api.openweathermap.org/data/2.5/weather?q=${this.city}&units=metric&lang=it&appid=${this.APIkey}`
         );
         const data = await res.data;
-        console.log(data);
+        db.collection("cities").doc().set({
+          city: this.city,
+          currentWeather: data,
+        }).then(() => {
+          this.$emit("close-modal")
+        });
       }
-    }
+    },
   },
 };
 </script>
@@ -69,7 +73,8 @@ export default {
     width: 80%;
     padding: 20px;
     background-color: #31363d;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
     input {
       color: #fff;
       border: none;
@@ -88,7 +93,8 @@ export default {
       padding: 6px 20px;
       border-radius: 8px;
       border: none;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06);
     }
   }
 }
